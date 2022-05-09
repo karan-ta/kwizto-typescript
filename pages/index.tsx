@@ -3,34 +3,65 @@ import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+
 interface Props {
   userAgent?: string;
 }
 const  NEXT_KEY = 39
 const  PREV_KEY = 37
 const  UP_KEY = 38
+
 export default class Page extends React.Component<Props> {
   currentCardCount = 6
+  isFront = true
   _handleKeyDown = (event:any) => {
     switch( event.keyCode ) {
      
         case NEXT_KEY:
-            console.log ("show next card")
+        if (this.currentCardCount == 0)
+       {
+            break
+        }
+        else if (this.currentCardCount > 0){
+          Array.from(document.getElementsByClassName ("cardContainer")).forEach((it) =>{
+            it.style.visibility = "visible";
+          })
+          
             if (document.getElementById ("card_"+this.currentCardCount) != null){ 
             document.getElementById ("card_"+this.currentCardCount).style.transform = "translate(-500px)"
             this.currentCardCount --
             }
-            break;
+            break
+          }
         case PREV_KEY:
+          if (this.currentCardCount == 6){
+              break   
+          }
+          else if (this.currentCardCount < 6){ 
+            Array.from(document.getElementsByClassName ("cardContainer")).forEach((it) =>{
+              it.style.visibility = "visible";
+            })
             console.log ("show previous card")
             if (document.getElementById ("card_"+(this.currentCardCount + 1)) != null){ 
             this.currentCardCount ++
             document.getElementById ("card_"+this.currentCardCount).style.transform = "translate(0px)"
             }
-            break;
+            break
+          }
         case UP_KEY:
             console.log ("flip the card")
-            document.getElementById ("card_"+this.currentCardCount).classList.toggle("flipme");
+            console.log (this.currentCardCount)
+            Array.from(document.getElementsByClassName ("cardContainer")).forEach((it) =>{
+              console.log (it.id)
+              if (it.id != "card_"+this.currentCardCount)
+              it.style.visibility = "hidden";
+            })
+            if (this.isFront)
+            document.getElementById ("card_"+this.currentCardCount).style.transform = "rotateY(180deg)"
+            else
+            document.getElementById ("card_"+this.currentCardCount).style.transform = "rotateY(0deg)"
+            this.isFront == true ?this.isFront = false:this.isFront = true
+            
               // document.getElementById ("card_"+this.currentCardCount).style.transform = "translate(0px)"
             break;
         default: 
@@ -38,6 +69,10 @@ export default class Page extends React.Component<Props> {
     }
 }
    componentDidMount (){
+    Array.from(document.getElementsByClassName ("cardContainer")).forEach((it) =>{
+    it.style.visibility = "hidden"
+    })
+    document.getElementById ("card_6").style.visibility = "visible"
       console.log ("inside componentDidMount")
       document.addEventListener("keydown", this._handleKeyDown);
   }
@@ -76,22 +111,52 @@ export default class Page extends React.Component<Props> {
    
 </div>
 <div id = "card_1" onClick={this.cardClick} className="cardContainer">
-  Hello guys whats up with you
+<div className="frontCard">
+  Hello world 1
+  </div>
+  <div className="backCard">
+  World Hello 1
+  </div>
 </div>
 <div id = "card_2" onClick={this.cardClick} className="cardContainer">
-  can we start studying now
+<div className="frontCard">
+  Hello world 2
+  </div>
+  <div className="backCard">
+  World Hello 2
+  </div>
 </div>
 <div id = "card_3" onClick={this.cardClick} className="cardContainer">
- lorem ipsum
+<div className="frontCard">
+  Hello world 3
+  </div>
+  <div className="backCard">
+  World Hello 3
+  </div>
 </div>
 <div id = "card_4" onClick={this.cardClick} className="cardContainer">
-  kotlin vs typescript
+<div className="frontCard">
+  Hello world 4
+  </div>
+  <div className="backCard">
+  World Hello 4
+  </div>
 </div>
 <div id = "card_5" onClick={this.cardClick} className="cardContainer">
-  android architecture
+<div className="frontCard">
+  Hello world 5
+  </div>
+  <div className="backCard">
+  World Hello 5
+  </div>
 </div>
 <div id = "card_6" onClick={this.cardClick} className="cardContainer">
- what is view model
+<div className="frontCard">
+  Hello world 6
+  </div>
+  <div className="backCard">
+  World Hello 6
+  </div>
 </div>
 </div>
 {/* 
