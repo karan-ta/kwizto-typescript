@@ -8,10 +8,12 @@ interface Props {
 }
 const  NEXT_KEY = 39
 const  PREV_KEY = 37
+const  UP_KEY = 38
 export default class Page extends React.Component<Props> {
   currentCardCount = 6
   _handleKeyDown = (event:any) => {
     switch( event.keyCode ) {
+     
         case NEXT_KEY:
             console.log ("show next card")
             if (document.getElementById ("card_"+this.currentCardCount) != null){ 
@@ -25,6 +27,11 @@ export default class Page extends React.Component<Props> {
             this.currentCardCount ++
             document.getElementById ("card_"+this.currentCardCount).style.transform = "translate(0px)"
             }
+            break;
+        case UP_KEY:
+            console.log ("flip the card")
+            document.getElementById ("card_"+this.currentCardCount).classList.toggle("flipme");
+              // document.getElementById ("card_"+this.currentCardCount).style.transform = "translate(0px)"
             break;
         default: 
             break;
@@ -60,7 +67,13 @@ export default class Page extends React.Component<Props> {
 </div> */}
 <div className = "displayContainer">
 <div id = "card_0" onClick={this.cardClick} className="cardContainer">
-  Hello world 
+  <div className="frontCard">
+  Hello world
+  </div>
+  <div className="backCard">
+  World Hello
+  </div>
+   
 </div>
 <div id = "card_1" onClick={this.cardClick} className="cardContainer">
   Hello guys whats up with you

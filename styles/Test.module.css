@@ -1,0 +1,10 @@
+.testCardContainer{
+    position:absolute;
+    }
+    .testFrontCard{
+    position:absolute;
+    color:red;
+    }
+    .testBackCard{
+    position:absolute;
+    }
